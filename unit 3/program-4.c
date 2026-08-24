@@ -9,6 +9,7 @@ struct Node
 
 struct Node *start = NULL;
 
+
 void insert_begin()
 {
     struct Node *newnode;
@@ -23,6 +24,8 @@ void insert_begin()
 
     printf("Node inserted at beginning.\n");
 }
+
+
 
 void insert_end()
 {
@@ -54,6 +57,9 @@ void insert_end()
     printf("Node inserted at end.\n");
 }
 
+
+
+
 void insert_after()
 {
     struct Node *newnode, *ptr;
@@ -64,7 +70,7 @@ void insert_after()
     printf("Enter value: ");
     scanf("%d", &newnode->data);
 
-    printf("Enter the value after which you want to insert: ");
+    printf("Enter the value after which to insert: ");
     scanf("%d", &value);
 
     ptr = start;
@@ -76,48 +82,51 @@ void insert_after()
 
     if (ptr == NULL)
     {
-        printf("Node %d not found.\n", value);
+        printf("Node not found.\n");
         free(newnode);
+
     }
 
     newnode->next = ptr->next;
     ptr->next = newnode;
 
-    printf("Node inserted after %d.\n", value);
+    printf("Node inserted successfully.\n");
 }
+
+
 
 void insert_before()
 {
-    struct Node *new_node, *ptr, *preptr;
-    int val, num;
+    struct Node *newnode, *ptr, *preptr;
+    int value;
 
-    new_node = (struct Node *)malloc(sizeof(struct Node));
+    newnode = (struct Node *)malloc(sizeof(struct Node));
 
-    if (new_node == NULL)
+    printf("Enter value: ");
+    scanf("%d", &newnode->data);
+
+    printf("Enter the value before which to insert: ");
+    scanf("%d", &value);
+
+    if (start == NULL)
     {
-        printf("OVERFLOW\n");
+        printf("List is empty.\n");
+        free(newnode);
+
     }
 
-    printf("Enter value to insert: ");
-    scanf("%d", &val);
-    new_node->data = val;
+    if (start->data == value)
+    {
+        newnode->next = start;
+        start = newnode;
 
-    printf("Enter the value before which you want to insert: ");
-    scanf("%d", &num);
+        printf("Node inserted successfully.\n");
+
+    }
 
     ptr = start;
 
-    if (ptr != NULL && ptr->data == num)
-    {
-        new_node->next = ptr;
-        start = new_node;
-
-        printf("Node inserted before %d.\n", num);
-    }
-
-    preptr = ptr;
-
-    while (ptr != NULL && ptr->data != num)
+    while (ptr != NULL && ptr->data != value)
     {
         preptr = ptr;
         ptr = ptr->next;
@@ -125,15 +134,20 @@ void insert_before()
 
     if (ptr == NULL)
     {
-        printf("Node %d not found.\n", num);
-        free(new_node);
+        printf("Node not found.\n");
+        free(newnode);
+
     }
 
-    preptr->next = new_node;
-    new_node->next = ptr;
+    newnode->next = ptr;
+    preptr->next = newnode;
 
-    printf("Node inserted before %d.\n", num);
+    printf("Node inserted successfully.\n");
 }
+
+
+
+
 
 void delete_first()
 {
@@ -142,6 +156,7 @@ void delete_first()
     if (start == NULL)
     {
         printf("List is empty.\n");
+
     }
 
     ptr = start;
@@ -149,8 +164,11 @@ void delete_first()
 
     free(ptr);
 
-    printf("First node deleted.\n");
+    printf("First node deleted successfully.\n");
 }
+
+
+
 void delete_last()
 {
     struct Node *ptr, *preptr;
@@ -158,10 +176,11 @@ void delete_last()
     if (start == NULL)
     {
         printf("List is empty.\n");
+
     }
 
     ptr = start;
-    preptr = ptr;
+    preptr=ptr;
 
     while (ptr->next != NULL)
     {
@@ -170,11 +189,11 @@ void delete_last()
     }
 
     preptr->next = NULL;
-
     free(ptr);
 
-    printf("Last node deleted.\n");
+    printf("Last node deleted successfully.\n");
 }
+
 void delete_after()
 {
      struct Node *ptr, *preptr, *temp;
@@ -183,6 +202,7 @@ void delete_after()
     if (start == NULL)
     {
         printf("List is empty.\n");
+
     }
 
     printf("Enter the value to delete: ");
@@ -195,14 +215,15 @@ void delete_after()
     {
         preptr = ptr;
         ptr = ptr->next;
+
     }
+    temp= ptr;
+    preptr->next=ptr->next;
+    free(temp);
 
-        temp = ptr;
-        preptr->next = ptr->next;
-        free(temp);
-
-    printf("Specific node deleted.\n");
+    printf("after node deleted.\n");
 }
+/* Display */
 void display()
 {
     struct Node *ptr;
@@ -225,6 +246,8 @@ void display()
 
     printf("NULL\n");
 }
+
+
 int main()
 {
     int ch;
@@ -232,13 +255,22 @@ int main()
     while (1)
     {
         printf("\n----- Singly Linked List -----\n");
+
+
         printf("1. Insert at beginning\n");
         printf("2. Insert at end\n");
+
+
         printf("3. Insert after specific node\n");
         printf("4. Insert before specific node\n");
+
+
         printf("5. Delete first node\n");
         printf("6. Delete last node\n");
-        printf("7. delete after node\n");
+
+        printf("7. Delete after node\n");
+
+
         printf("8. Display\n");
         printf("9. Exit\n");
 
@@ -263,6 +295,7 @@ int main()
                 insert_before();
                 break;
 
+
             case 5:
                 delete_first();
                 break;
@@ -274,6 +307,7 @@ int main()
             case 7:
                 delete_after();
                 break;
+
 
             case 8:
                 display();
